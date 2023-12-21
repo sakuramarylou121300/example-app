@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
+use Livewire\Attributes\Rule;
+use Livewire\WithPagination;
 
 class Clicker extends Component
 {
@@ -12,23 +14,36 @@ class Clicker extends Component
     //     dump("clicked");
     // }
 
-    public $username = "testuser";
+    // public $username = "testuser";
+    use WithPagination;
+    
+    #[Rule('required| min:2| max:50')]
+    public $name = '';
+
+    #[Rule('required| email| unique:users')]
+    public $email = '';
+
+    #[Rule('required| min: 5')]
+    public $password = '';
 
     public function createNewUser(){
+        $validated = this()->validate();
+
         User::create([
-            'name' => 'Mary Lou',
-            'email'  => 'marylou123@gmail.com',
-            'password'  => '123456'
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' => $this->password
         ]);
+
+        $this->reset(['name', 'email', 'password']);
+        request()->session()->flash('success', 'User Created Successfully');
     }
 
     public function render()
     {
-        $title = "Test";
-        $users = User::all();
-
+        // the users will be use in frontend
+        $users = User::paginate(5);
         return view('livewire.clicker', [
-            'title' => $title,
             'users' =>$users
         ]);
     }
