@@ -35,7 +35,9 @@ class Clicker extends Component
             'password' => $this->password
         ]);
 
+        // reset after create or action
         $this->reset(['name', 'email', 'password']);
+        // message after action
         request()->session()->flash('success', 'User Created Successfully');
     }
 

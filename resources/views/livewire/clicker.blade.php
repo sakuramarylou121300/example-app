@@ -4,6 +4,7 @@
         Create New User
     </button> -->
 
+    <!-- this is the message after create or action -->
     @if(session('success'))
        <span class='w-100 py-3 bg-green-600 rounded px-3 py-3 text-white'>{{session('success')}}</span> 
     @endif
