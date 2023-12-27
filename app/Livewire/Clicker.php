@@ -27,7 +27,7 @@ class Clicker extends Component
     public $password = '';
 
     public function createNewUser(){
-        $validated = this()->validate();
+        $validated = $this->validate();
 
         User::create([
             'name' => $this->name,
